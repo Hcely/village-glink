@@ -11,6 +11,11 @@
     </parent>
 
     <artifactId>village-board-game</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.village.lite</groupId>
+            <artifactId>village-lite-data</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
