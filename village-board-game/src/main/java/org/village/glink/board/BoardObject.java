@@ -8,7 +8,7 @@ import org.village.lite.common.Copyable;
  * @since 2026/6/24 20:06
  */
 
-public class BoardObject implements Cloneable, Copyable {
+public class BoardObject implements Cloneable, Copyable {//NOSONAR
     @Getter
     private long createTime = System.currentTimeMillis();
 
