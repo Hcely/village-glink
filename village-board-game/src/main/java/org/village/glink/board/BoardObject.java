@@ -1,6 +1,5 @@
 package org.village.glink.board;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.village.lite.common.Copyable;
 
@@ -9,14 +8,16 @@ import org.village.lite.common.Copyable;
  */
 
 public class BoardObject implements Cloneable, Copyable {//NOSONAR
-    @Getter
-    private long createTime = System.currentTimeMillis();
+    protected final BoardContext context;
+
+    public BoardObject(BoardContext context) {
+        this.context = context;
+    }
+
 
     @Override
     @SneakyThrows
-    public Object copy() {
-        BoardObject object = (BoardObject) super.clone();
-        object.createTime = System.currentTimeMillis();
-        return object;
+    public BoardObject copy() {
+        return (BoardObject) super.clone();
     }
 }
