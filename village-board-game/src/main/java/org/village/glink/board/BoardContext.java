@@ -15,7 +15,8 @@ public class BoardContext {
     private final Random random;
     @Setter
     private long time;
-    
+
+    private
 
     public BoardContext(long seed) {
         this.seed = seed;
@@ -29,6 +30,4 @@ public class BoardContext {
     public void increaseTime(long time) {
         this.time += time;
     }
-
-
 }

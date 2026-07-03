@@ -1,7 +1,6 @@
 package org.village.glink.board.data;
 
 import lombok.Getter;
-import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardObject;
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.util.ClassUtil;
@@ -14,14 +13,10 @@ import org.village.lite.common.util.StrUtil;
 public class BoardData extends BoardObject {
     @Getter
     protected BoardInstance instance;
-    protected final String name;
-    protected final String label;
     protected final int hashcode;
 
-    public BoardData(BoardContext context, String name, String label) {
-        super(context);
-        this.name = StrUtil.defaultIfEmpty(name);
-        this.label = StrUtil.defaultIfEmpty(label, this.name);
+    public BoardData(String name, String label) {
+        super(name, label);
         this.hashcode = StrUtil.hashcodeIgnoreCase(this.name);
     }
 
@@ -32,12 +27,12 @@ public class BoardData extends BoardObject {
     @Override
     public BoardData copy() {
         BoardData data = (BoardData) super.copy();
-        data.setInstance(null);
+        data.instance = null;
         return data;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) {// NOSONAR
         if (obj == null) {
             return false;
         }

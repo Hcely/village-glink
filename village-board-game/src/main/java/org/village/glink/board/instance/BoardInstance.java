@@ -3,28 +3,31 @@ package org.village.glink.board.instance;
 import lombok.Getter;
 import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardObject;
-import org.village.glink.board.data.BoardAttributes;
+import org.village.glink.board.data.BoardAttribute;
+import org.village.glink.board.data.BoardDataMap;
+import org.village.glink.board.data.BoardState;
 import org.village.glink.board.data.BoardTag;
-import org.village.glink.board.data.BoardTags;
 
 /**
  * @since 2026/6/24 21:30
  */
 public class BoardInstance extends BoardObject {
+    protected final BoardContext context;
     @Getter
     private final String id;
     @Getter
     private long createTime;
+    private final BoardDataMap<BoardAttribute> attributes;
+    private final BoardDataMap<BoardState> states;
+    private final BoardDataMap<BoardTag> tags;
 
-    private final BoardAttributes attributes;
-
-    private final BoardTags tags;
-
-    public BoardInstance(BoardContext context, String id) {
-        super(context);
+    public BoardInstance(BoardContext context, String id, String name, String label) {
+        super(name, label);
+        this.context = context;
         this.id = id;
-        this.attributes = new BoardAttributes(this);
-        this.tags = new BoardTags(this);
+        this.attributes = new BoardDataMap<>(this);
+        this.states = new BoardDataMap<>(this);
+        this.tags = new BoardDataMap<>(this);
         this.createTime = context.currentTime();
     }
 
@@ -37,5 +40,10 @@ public class BoardInstance extends BoardObject {
 
     public void addTag(BoardTag tag) {
         this.tags.add(tag);
+    }
+
+    @Override
+    public int hashCode() {//NOSONAR
+        return id.hashCode();
     }
 }
