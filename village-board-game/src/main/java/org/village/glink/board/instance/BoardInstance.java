@@ -1,45 +1,73 @@
 package org.village.glink.board.instance;
 
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardObject;
-import org.village.glink.board.data.BoardAttribute;
-import org.village.glink.board.data.BoardDataMap;
-import org.village.glink.board.data.BoardState;
-import org.village.glink.board.data.BoardTag;
+import org.village.glink.board.data.BoardData;
+import org.village.glink.board.data.BoardDataManager;
+
+import java.util.Collection;
 
 /**
  * @since 2026/6/24 21:30
  */
-public class BoardInstance extends BoardObject {
+public class BoardInstance //NOSONAR
+        extends BoardObject
+        implements Cloneable {
+    @Getter
     protected final BoardContext context;
     @Getter
-    private final String id;
+    protected BoardInstance parent;
     @Getter
-    private long createTime;
-    private final BoardDataMap<BoardAttribute> attributes;
-    private final BoardDataMap<BoardState> states;
-    private final BoardDataMap<BoardTag> tags;
+    private String id;
+    @Getter
+    protected long createTime;
 
-    public BoardInstance(BoardContext context, String id, String name, String label) {
+    //
+    protected final BoardDataManager dataMgr;
+
+    public BoardInstance(BoardContext context,
+                         String id,
+                         String name,
+                         String label) {
         super(name, label);
         this.context = context;
         this.id = id;
-        this.attributes = new BoardDataMap<>(this);
-        this.states = new BoardDataMap<>(this);
-        this.tags = new BoardDataMap<>(this);
+        this.dataMgr = new BoardDataManager(this);
         this.createTime = context.currentTime();
     }
 
-    @Override
-    public BoardInstance copy() {
-        BoardInstance object = (BoardInstance) super.copy();
+    @SneakyThrows
+    public BoardInstance copy(String id) {
+        BoardInstance object = (BoardInstance) super.clone();
+        object.id = id;
         object.createTime = context.currentTime();
         return object;
     }
 
-    public void addTag(BoardTag tag) {
-        this.tags.add(tag);
+    public <D extends BoardData> boolean containsData(Class<D> type, String name) {
+        return dataMgr.contains(type, name);
+    }
+
+    public <D extends BoardData> D getData(Class<D> type, String name) {
+        return dataMgr.get(type, name);
+    }
+
+    public <D extends BoardData> D removeData(Class<D> type, String name) {
+        return dataMgr.remove(type, name);
+    }
+
+    public <D extends BoardData> boolean addData(D data) {
+        return dataMgr.add(data);
+    }
+
+    public <D extends BoardData> boolean addData(Class<?> type, D data) {
+        return dataMgr.add(type, data);
+    }
+
+    public <D extends BoardData> Collection<D> allData(Class<D> type) {
+        return dataMgr.all(type);
     }
 
     @Override

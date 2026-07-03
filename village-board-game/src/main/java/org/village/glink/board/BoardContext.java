@@ -1,8 +1,10 @@
 package org.village.glink.board;
 
 import lombok.Getter;
-import lombok.Setter;
+import org.village.glink.board.instance.BoardInstance;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -13,21 +15,23 @@ public class BoardContext {
     private final long seed;
     @Getter
     private final Random random;
-    @Setter
     private long time;
+    private final Map<String, BoardInstance> instances;
 
-    private
+
 
     public BoardContext(long seed) {
         this.seed = seed;
         this.random = new Random(seed);
+        this.instances = new LinkedHashMap<>();
     }
 
     public long currentTime() {
         return time;
     }
 
-    public void increaseTime(long time) {
-        this.time += time;
+    public long increaseTime(long t) {
+        this.time += t;
+        return this.time;
     }
 }

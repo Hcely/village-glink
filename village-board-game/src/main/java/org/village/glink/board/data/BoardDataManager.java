@@ -2,6 +2,8 @@ package org.village.glink.board.data;
 
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.util.CollUtil;
+import org.village.lite.common.util.StrUtil;
+import org.village.lite.common.util.collection.ReferenceMap;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,42 +16,87 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class BoardDataManager {
     private final BoardInstance instance;
-    private final Map<Class<?>, BoardDataMap<?>> mgrMap;
+    private final Map<Class<?>, BoardDataMap> mgrMap;
 
     public BoardDataManager(BoardInstance instance) {
         this.instance = instance;
         this.mgrMap = new HashMap<>();
     }
 
-    public <D extends BoardData> BoardDataMap<D> map(Class<D> type) {
-        return (BoardDataMap<D>) this.mgrMap.computeIfAbsent(type, k -> new BoardDataMap<>(instance));
-    }
-
     public <D extends BoardData> boolean contains(Class<D> type, String name) {
-        BoardDataMap<D> m = (BoardDataMap<D>) this.mgrMap.get(type);
+        BoardDataMap m = this.mgrMap.get(type);
         return m != null && m.contains(name);
     }
 
     public <D extends BoardData> D get(Class<D> type, String name) {
-        BoardDataMap<D> m = (BoardDataMap<D>) this.mgrMap.get(type);
-        return m != null ? m.get(name) : null;
+        BoardDataMap m = this.mgrMap.get(type);
+        return m != null ? (D) m.get(name) : null;
     }
 
     public <D extends BoardData> D remove(Class<D> type, String name) {
-        BoardDataMap<D> m = (BoardDataMap<D>) this.mgrMap.get(type);
-        return m != null ? m.remove(name) : null;
+        BoardDataMap m = this.mgrMap.get(type);
+        return m != null ? (D) m.remove(name) : null;
     }
 
     public <D extends BoardData> boolean add(D data) {
         if (data == null) {
             return false;
         } else {
-            return map((Class<D>) data.getClass()).add(data);
+            return mgrMap.computeIfAbsent(data.getClass(), k -> new BoardDataMap(instance))
+                    .add(data);
+        }
+    }
+
+    public <D extends BoardData> boolean add(Class<?> type, D data) {
+        if (data == null) {
+            return false;
+        } else {
+            return mgrMap.computeIfAbsent(type, k -> new BoardDataMap(instance))
+                    .add(data);
         }
     }
 
     public <D extends BoardData> Collection<D> all(Class<D> type) {
-        BoardDataMap<D> m = (BoardDataMap<D>) this.mgrMap.get(type);
-        return m != null ? m.all() : CollUtil.emptyList();
+        BoardDataMap m = this.mgrMap.get(type);
+        return m != null ? (Collection<D>) m.all() : CollUtil.emptyList();
+    }
+
+    private static class BoardDataMap {
+        protected final BoardInstance instance;
+        protected final Map<String, BoardData> dataMap;
+        protected final Collection<BoardData> unDataColl;
+
+        BoardDataMap(BoardInstance instance) {
+            this.instance = instance;
+            this.dataMap = ReferenceMap.newIgnoredCaseMap();
+            this.unDataColl = CollUtil.unmodifiable(dataMap.values());
+        }
+
+        public boolean add(BoardData data) {
+            final String name = data.getName();
+            if (!dataMap.containsKey(name)) {
+                BoardData e = data.copy();
+                e.setInstance(instance);
+                dataMap.put(name, e);
+                return true;
+            }
+            return false;
+        }
+
+        public boolean contains(String name) {
+            return StrUtil.isNotEmpty(name) && dataMap.containsKey(name);
+        }
+
+        public BoardData get(String name) {
+            return dataMap.get(name);
+        }
+
+        public Collection<BoardData> all() {
+            return unDataColl;
+        }
+
+        public BoardData remove(String name) {
+            return dataMap.remove(name);
+        }
     }
 }

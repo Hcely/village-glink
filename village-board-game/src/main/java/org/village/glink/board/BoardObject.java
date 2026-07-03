@@ -1,8 +1,6 @@
 package org.village.glink.board;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
-import org.village.lite.common.Copyable;
 import org.village.lite.common.util.StrUtil;
 
 /**
@@ -10,7 +8,7 @@ import org.village.lite.common.util.StrUtil;
  */
 
 @Getter
-public class BoardObject implements Cloneable, Copyable {//NOSONAR
+public class BoardObject {
     protected final String name;
     protected final String label;
 
@@ -19,9 +17,5 @@ public class BoardObject implements Cloneable, Copyable {//NOSONAR
         this.label = StrUtil.defaultIfEmpty(label, this.name);
     }
 
-    @Override
-    @SneakyThrows
-    public BoardObject copy() {
-        return (BoardObject) super.clone();
-    }
+
 }
