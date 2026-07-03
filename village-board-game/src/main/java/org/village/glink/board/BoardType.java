@@ -9,4 +9,8 @@ public enum BoardType {
     ATTRIBUTE,
     STATE,
     SKILL,
+    PERK,
+    //
+
+
 }

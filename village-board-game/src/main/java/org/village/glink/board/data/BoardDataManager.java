@@ -1,5 +1,6 @@
 package org.village.glink.board.data;
 
+import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.util.CollUtil;
 import org.village.lite.common.util.StrUtil;
@@ -16,24 +17,24 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class BoardDataManager {
     private final BoardInstance instance;
-    private final Map<Class<?>, BoardDataMap> mgrMap;
+    private final Map<BoardType, BoardDataMap> mgrMap;
 
     public BoardDataManager(BoardInstance instance) {
         this.instance = instance;
         this.mgrMap = new HashMap<>();
     }
 
-    public <D extends BoardData> boolean contains(Class<D> type, String name) {
+    public boolean contains(BoardType type, String name) {
         BoardDataMap m = this.mgrMap.get(type);
         return m != null && m.contains(name);
     }
 
-    public <D extends BoardData> D get(Class<D> type, String name) {
+    public <D extends BoardData> D get(BoardType type, String name) {
         BoardDataMap m = this.mgrMap.get(type);
         return m != null ? (D) m.get(name) : null;
     }
 
-    public <D extends BoardData> D remove(Class<D> type, String name) {
+    public <D extends BoardData> D remove(BoardType type, String name) {
         BoardDataMap m = this.mgrMap.get(type);
         return m != null ? (D) m.remove(name) : null;
     }
@@ -42,21 +43,13 @@ public class BoardDataManager {
         if (data == null) {
             return false;
         } else {
-            return mgrMap.computeIfAbsent(data.getClass(), k -> new BoardDataMap(instance))
+            return mgrMap.computeIfAbsent(data.getType(), k -> new BoardDataMap(instance))
                     .add(data);
         }
     }
 
-    public <D extends BoardData> boolean add(Class<?> type, D data) {
-        if (data == null) {
-            return false;
-        } else {
-            return mgrMap.computeIfAbsent(type, k -> new BoardDataMap(instance))
-                    .add(data);
-        }
-    }
 
-    public <D extends BoardData> Collection<D> all(Class<D> type) {
+    public <D extends BoardData> Collection<D> all(BoardType type) {
         BoardDataMap m = this.mgrMap.get(type);
         return m != null ? (Collection<D>) m.all() : CollUtil.emptyList();
     }
