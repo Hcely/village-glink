@@ -18,6 +18,4 @@ public class BoardObject {
         this.name = StrUtil.defaultIfEmpty(name);
         this.label = StrUtil.defaultIfEmpty(label, this.name);
     }
-
-
 }

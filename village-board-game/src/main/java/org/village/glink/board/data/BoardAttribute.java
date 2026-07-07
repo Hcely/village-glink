@@ -1,7 +1,7 @@
 package org.village.glink.board.data;
 
 import lombok.Getter;
-import org.village.glink.board.BoardContext;
+import org.village.glink.board.BoardType;
 import org.village.lite.common.util.num.NumUtil;
 
 import java.math.BigDecimal;
@@ -14,12 +14,12 @@ import java.math.BigDecimal;
 public class BoardAttribute extends BoardData {
     protected BigDecimal value;
 
-    public BoardAttribute(BoardContext context, String name, String label) {
-        this(context, name, label, BigDecimal.ZERO);
+    public BoardAttribute(String name, String label) {
+        this(name, label, BigDecimal.ZERO);
     }
 
-    public BoardAttribute(BoardContext context, String name, String label, Number value) {
-        super(context, name, label);
+    public BoardAttribute(String name, String label, Number value) {
+        super(BoardType.ATTRIBUTE, name, label);
         this.value = NumUtil.of(value);
     }
 }

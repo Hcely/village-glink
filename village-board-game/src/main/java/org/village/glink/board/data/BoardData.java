@@ -3,6 +3,7 @@ package org.village.glink.board.data;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.village.glink.board.BoardObject;
+import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.Copyable;
 import org.village.lite.common.util.ClassUtil;
@@ -20,8 +21,8 @@ public class BoardData //NOSONAR
     protected long createTime;
     protected final int hashcode;
 
-    public BoardData(String name, String label) {
-        super(name, label);
+    public BoardData(BoardType type, String name, String label) {
+        super(type, name, label);
         this.hashcode = StrUtil.hashcodeIgnoreCase(this.name);
     }
 

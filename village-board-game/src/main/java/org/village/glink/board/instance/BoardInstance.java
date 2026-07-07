@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardObject;
+import org.village.glink.board.BoardType;
 import org.village.glink.board.data.BoardData;
 import org.village.glink.board.data.BoardDataManager;
 
@@ -28,10 +29,11 @@ public class BoardInstance //NOSONAR
     protected final BoardDataManager dataMgr;
 
     public BoardInstance(BoardContext context,
+                         BoardType type,
                          String id,
                          String name,
                          String label) {
-        super(name, label);
+        super(type, name, label);
         this.context = context;
         this.id = id;
         this.dataMgr = new BoardDataManager(this);

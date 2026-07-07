@@ -21,6 +21,13 @@ public enum BoardType {
     ;
     private final Group group;
 
+    public boolean isData() {
+        return group == Group.DATA;
+    }
+
+    public boolean isInstance() {
+        return group == Group.INSTANCE;
+    }
 
     enum Group {
         DATA,
