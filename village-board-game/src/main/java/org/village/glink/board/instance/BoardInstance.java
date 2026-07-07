@@ -25,7 +25,6 @@ public class BoardInstance //NOSONAR
     @Getter
     protected long createTime;
 
-    //
     protected final BoardDataManager dataMgr;
 
     public BoardInstance(BoardContext context,
@@ -48,15 +47,15 @@ public class BoardInstance //NOSONAR
         return object;
     }
 
-    public <D extends BoardData> boolean containsData(Class<D> type, String name) {
+    public boolean containsData(BoardType type, String name) {
         return dataMgr.contains(type, name);
     }
 
-    public <D extends BoardData> D getData(Class<D> type, String name) {
+    public <D extends BoardData> D getData(BoardType type, String name) {
         return dataMgr.get(type, name);
     }
 
-    public <D extends BoardData> D removeData(Class<D> type, String name) {
+    public <D extends BoardData> D removeData(BoardType type, String name) {
         return dataMgr.remove(type, name);
     }
 
@@ -64,11 +63,7 @@ public class BoardInstance //NOSONAR
         return dataMgr.add(data);
     }
 
-    public <D extends BoardData> boolean addData(Class<?> type, D data) {
-        return dataMgr.add(type, data);
-    }
-
-    public <D extends BoardData> Collection<D> allData(Class<D> type) {
+    public <D extends BoardData> Collection<D> allData(BoardType type) {
         return dataMgr.all(type);
     }
 

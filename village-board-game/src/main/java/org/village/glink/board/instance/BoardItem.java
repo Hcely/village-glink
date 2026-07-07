@@ -1,6 +1,7 @@
 package org.village.glink.board.instance;
 
 import org.village.glink.board.BoardContext;
+import org.village.glink.board.BoardType;
 
 /**
  * @author yepeijie
@@ -8,6 +9,6 @@ import org.village.glink.board.BoardContext;
  */
 public class BoardItem extends BoardInstance {
     public BoardItem(BoardContext context, String id, String name, String label) {
-        super(context, id, name, label);
+        super(context, BoardType.ITEM, id, name, label);
     }
 }
