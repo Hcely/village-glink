@@ -17,7 +17,7 @@ public enum BoardType {
     PERK(Group.DATA),
     //
     ITEM(Group.INSTANCE),
-
+    CHARACTER(Group.INSTANCE),
     ;
     private final Group group;
 
