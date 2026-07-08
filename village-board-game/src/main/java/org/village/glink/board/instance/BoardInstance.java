@@ -1,7 +1,6 @@
 package org.village.glink.board.instance;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
 import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardObject;
 import org.village.glink.board.BoardType;
@@ -13,17 +12,15 @@ import java.util.Collection;
 /**
  * @since 2026/6/24 21:30
  */
-public class BoardInstance //NOSONAR
-        extends BoardObject
-        implements Cloneable {
+public class BoardInstance extends BoardObject {
     @Getter
     protected final BoardContext context;
     @Getter
     protected BoardInstance parent;
     @Getter
-    private String id;
+    protected final String id;
     @Getter
-    protected long createTime;
+    protected final long createTime;
 
     protected final BoardDataManager dataMgr;
 
@@ -37,14 +34,6 @@ public class BoardInstance //NOSONAR
         this.id = id;
         this.dataMgr = new BoardDataManager(this);
         this.createTime = context.currentTime();
-    }
-
-    @SneakyThrows
-    public BoardInstance copy(String id) {
-        BoardInstance object = (BoardInstance) super.clone();
-        object.id = id;
-        object.createTime = context.currentTime();
-        return object;
     }
 
     public boolean containsData(BoardType type, String name) {
