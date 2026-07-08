@@ -8,7 +8,14 @@ import org.village.glink.board.BoardType;
  * @date 2026/7/3
  */
 public class BoardItem extends BoardInstance {
-    public BoardItem(BoardContext context, String id, String name, String label) {
+    protected final boolean overlay;
+
+    public BoardItem(BoardContext context,
+                     String id,
+                     String name,
+                     String label,
+                     boolean overlay) {
         super(context, BoardType.ITEM, id, name, label);
+        this.overlay = overlay;
     }
 }
