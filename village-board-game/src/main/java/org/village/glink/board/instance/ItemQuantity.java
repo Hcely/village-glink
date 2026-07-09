@@ -14,6 +14,14 @@ public class ItemQuantity {
     @Getter
     private long quantity;
 
+    public PriorityQuantityNode priorityNode() {
+        return head;
+    }
+
+    public long getPriorityQuantity() {
+        return quantity - basicQuantity;
+    }
+
     public boolean add(long v) {
         if (v > 0) {
             basicQuantity += v;
