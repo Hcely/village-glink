@@ -1,8 +1,6 @@
 package org.village.glink.board;
 
 import lombok.Getter;
-import org.village.glink.board.data.BoardData;
-import org.village.lite.common.util.ClassUtil;
 import org.village.lite.common.util.StrUtil;
 
 /**
@@ -21,15 +19,6 @@ public class BoardObject {
         this.name = StrUtil.defaultIfEmpty(name);
         this.label = StrUtil.defaultIfEmpty(label, this.name);
         this.hashcode = StrUtil.hashcodeIgnoreCase(this.name);
-    }
-
-    @Override
-    public boolean equals(Object obj) {// NOSONAR
-        if (obj == null) {
-            return false;
-        }
-        Class<?> objType = obj.getClass();
-        return ClassUtil.isAssignable(this.getClass(), objType) && eq(((BoardData) obj));
     }
 
     @Override
