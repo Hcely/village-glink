@@ -6,7 +6,7 @@ import org.village.glink.board.BoardObject;
 import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.Copyable;
-import org.village.lite.common.util.ClassUtil;
+import org.village.lite.common.util.StrUtil;
 
 /**
  * @author yepeijie
@@ -34,5 +34,14 @@ public class BoardData //NOSONAR
         BoardData data = (BoardData) super.clone();
         data.instance = null;
         return data;
+    }
+
+
+    public boolean eq(BoardObject d) {
+        return eq(d.getName());
+    }
+
+    public boolean eq(String name) {
+        return StrUtil.equalsIgnoreCase(this.name, name);
     }
 }

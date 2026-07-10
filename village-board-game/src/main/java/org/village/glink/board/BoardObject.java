@@ -36,12 +36,4 @@ public class BoardObject {
     public int hashCode() {
         return hashcode;
     }
-
-    public boolean eq(BoardObject d) {
-        return eq(d.name);
-    }
-
-    public boolean eq(String name) {
-        return StrUtil.equalsIgnoreCase(this.name, name);
-    }
 }
