@@ -18,20 +18,16 @@ public class BoardInstance extends BoardObject {
     @Getter
     protected BoardInstance parent;
     @Getter
-    protected final String id;
-    @Getter
     protected final long createTime;
 
     protected final BoardDataManager dataMgr;
 
     public BoardInstance(BoardContext context,
                          BoardType type,
-                         String id,
                          String name,
                          String label) {
         super(type, name, label);
         this.context = context;
-        this.id = id;
         this.dataMgr = new BoardDataManager(this);
         this.createTime = context.currentTime();
     }
@@ -56,8 +52,7 @@ public class BoardInstance extends BoardObject {
         return dataMgr.all(type);
     }
 
-    @Override
-    public int hashCode() {//NOSONAR
-        return id.hashCode();
+    protected void setParent(BoardInstance parent) {
+        this.parent = parent;
     }
 }

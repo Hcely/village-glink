@@ -7,7 +7,6 @@ import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.Copyable;
 import org.village.lite.common.util.ClassUtil;
-import org.village.lite.common.util.StrUtil;
 
 /**
  * @author yepeijie
@@ -19,11 +18,9 @@ public class BoardData //NOSONAR
     @Getter
     protected BoardInstance instance;
     protected long createTime;
-    protected final int hashcode;
 
     public BoardData(BoardType type, String name, String label) {
         super(type, name, label);
-        this.hashcode = StrUtil.hashcodeIgnoreCase(this.name);
     }
 
     protected void setInstance(BoardInstance instance) {
@@ -38,28 +35,4 @@ public class BoardData //NOSONAR
         data.instance = null;
         return data;
     }
-
-    @Override
-    public boolean equals(Object obj) {// NOSONAR
-        if (obj == null) {
-            return false;
-        }
-        Class<?> objType = obj.getClass();
-        return ClassUtil.isAssignable(this.getClass(), objType) && eq(((BoardData) obj));
-    }
-
-    public boolean eq(BoardData d) {
-        return eq(d.name);
-    }
-
-    public boolean eq(String name) {
-        return StrUtil.equalsIgnoreCase(this.name, name);
-    }
-
-    @Override
-    public int hashCode() {
-        return hashcode;
-    }
-
-
 }

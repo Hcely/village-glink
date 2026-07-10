@@ -7,7 +7,10 @@ import org.village.glink.board.BoardType;
  * @since 2026/7/7 22:29
  */
 public class BoardCharacter extends BoardInstance {
+    private final BoardItemManager itemManager;
+
     public BoardCharacter(BoardContext context, String id, String name, String label) {
         super(context, BoardType.CHARACTER, id, name, label);
+        this.itemManager = new BoardItemManager(this);
     }
 }

@@ -2,12 +2,11 @@ package org.village.glink.board.data;
 
 import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
+import org.village.glink.board.instance.BoardObjectManager;
 import org.village.lite.common.util.CollUtil;
-import org.village.lite.common.util.StrUtil;
-import org.village.lite.common.util.collection.ReferenceMap;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
@@ -21,7 +20,7 @@ public class BoardDataManager {
 
     public BoardDataManager(BoardInstance instance) {
         this.instance = instance;
-        this.mgrMap = new HashMap<>();
+        this.mgrMap = new EnumMap<>(BoardType.class);
     }
 
     public boolean contains(BoardType type, String name) {
@@ -54,42 +53,25 @@ public class BoardDataManager {
         return m != null ? (Collection<D>) m.all() : CollUtil.emptyList();
     }
 
-    private static class BoardDataMap {
-        protected final BoardInstance instance;
-        protected final Map<String, BoardData> dataMap;
-        protected final Collection<BoardData> unDataColl;
+    private static class BoardDataMap extends BoardObjectManager<BoardData> {
 
         BoardDataMap(BoardInstance instance) {
-            this.instance = instance;
-            this.dataMap = ReferenceMap.newIgnoredCaseMap();
-            this.unDataColl = CollUtil.unmodifiable(dataMap.values());
+            super(instance);
         }
 
         public boolean add(BoardData data) {
             final String name = data.getName();
-            if (!dataMap.containsKey(name)) {
+            if (!map.containsKey(name)) {
                 BoardData e = data.copy();
                 e.setInstance(instance);
-                dataMap.put(name, e);
+                map.put(name, e);
                 return true;
             }
             return false;
         }
 
-        public boolean contains(String name) {
-            return StrUtil.isNotEmpty(name) && dataMap.containsKey(name);
-        }
-
-        public BoardData get(String name) {
-            return dataMap.get(name);
-        }
-
-        public Collection<BoardData> all() {
-            return unDataColl;
-        }
-
         public BoardData remove(String name) {
-            return dataMap.remove(name);
+            return map.remove(name);
         }
     }
 }

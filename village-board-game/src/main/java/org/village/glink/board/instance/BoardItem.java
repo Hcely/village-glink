@@ -9,6 +9,7 @@ import org.village.glink.board.BoardType;
  */
 public class BoardItem extends BoardInstance {
     protected final boolean overlay;
+    protected final ItemQuantity quantity;
 
     public BoardItem(BoardContext context,
                      String id,
@@ -17,5 +18,8 @@ public class BoardItem extends BoardInstance {
                      boolean overlay) {
         super(context, BoardType.ITEM, id, name, label);
         this.overlay = overlay;
+        this.quantity = new ItemQuantity();
     }
+
+
 }
