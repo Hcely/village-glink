@@ -27,6 +27,4 @@ public class BoardItem extends BoardInstance {
         this.overlay = false;
         this.quantity = null;
     }
-
-
 }

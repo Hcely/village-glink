@@ -2,8 +2,9 @@ package org.village.glink.board.data;
 
 import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
-import org.village.glink.board.instance.BoardObjectManager;
 import org.village.lite.common.util.CollUtil;
+import org.village.lite.common.util.StrUtil;
+import org.village.lite.common.util.collection.ReferenceMap;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -15,8 +16,8 @@ import java.util.Map;
  */
 @SuppressWarnings("unchecked")
 public class BoardDataManager {
-    private final BoardInstance instance;
-    private final Map<BoardType, BoardDataMap> mgrMap;
+    protected final BoardInstance instance;
+    protected final Map<BoardType, BoardDataMap> mgrMap;
 
     public BoardDataManager(BoardInstance instance) {
         this.instance = instance;
@@ -53,21 +54,39 @@ public class BoardDataManager {
         return m != null ? (Collection<D>) m.all() : CollUtil.emptyList();
     }
 
-    private static class BoardDataMap extends BoardObjectManager<BoardData> {
+    protected static class BoardDataMap {
+        protected final BoardInstance instance;
+        protected final Map<String, BoardData> map;
+        protected final Collection<BoardData> coll;
 
-        BoardDataMap(BoardInstance instance) {
-            super(instance);
+        public BoardDataMap(BoardInstance instance) {
+            this.instance = instance;
+            this.map = ReferenceMap.newIgnoredCaseMap();
+            this.coll = CollUtil.unmodifiable(map.values());
+        }
+
+        public boolean contains(String name) {
+            return StrUtil.isNotEmpty(name) && map.containsKey(name);
+        }
+
+        public BoardData get(String name) {
+            return map.get(name);
+        }
+
+        public Collection<BoardData> all() {
+            return coll;
         }
 
         public boolean add(BoardData data) {
             final String name = data.getName();
-            if (!map.containsKey(name)) {
+            if (map.containsKey(name)) {
+                return false;
+            } else {
                 BoardData e = data.copy();
                 e.setInstance(instance);
                 map.put(name, e);
                 return true;
             }
-            return false;
         }
 
         public BoardData remove(String name) {
