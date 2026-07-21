@@ -5,4 +5,5 @@ package org.village.glink.board.event;
  * @date 2026/7/20
  */
 public enum BoardEventAction {
+    
 }
