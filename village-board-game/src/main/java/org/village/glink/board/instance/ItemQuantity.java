@@ -20,7 +20,9 @@ public class ItemQuantity {
         return head;
     }
 
-    public boo
+    public boolean enoughQuantity(int q) {
+        return quantity >= q;
+    }
 
     public long getPriorityQuantity() {
         return quantity - basicQuantity;
