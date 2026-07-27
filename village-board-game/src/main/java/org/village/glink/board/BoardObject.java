@@ -12,17 +12,11 @@ public class BoardObject {
     protected final BoardType type;
     protected final String name;
     protected final String label;
-    private final int hashcode;
+
 
     public BoardObject(BoardType type, String name, String label) {
         this.type = type;
         this.name = StrUtil.defaultIfEmpty(name);
         this.label = StrUtil.defaultIfEmpty(label, this.name);
-        this.hashcode = StrUtil.hashcodeIgnoreCase(this.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return hashcode;
     }
 }

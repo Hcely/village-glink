@@ -22,6 +22,13 @@ public class ItemQuantity {
         return quantity - basicQuantity;
     }
 
+    public void add(ItemQuantity quantity) {
+        add(quantity.basicQuantity);
+        for (PriorityQuantityNode node = quantity.head; node != null; node = node.next) {
+            add(node.quantity, node.priority, node.flag);
+        }
+    }
+
     public boolean add(long v) {
         if (v > 0) {
             basicQuantity += v;

@@ -1,11 +1,13 @@
 package org.village.glink.board.instance;
 
 import lombok.Getter;
+import org.springframework.util.Assert;
 import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardObject;
 import org.village.glink.board.BoardType;
 import org.village.glink.board.data.BoardData;
 import org.village.glink.board.data.BoardDataManager;
+import org.village.lite.common.util.StrUtil;
 
 import java.util.Collection;
 
@@ -20,20 +22,30 @@ public class BoardInstance extends BoardObject {
     @Getter
     protected final String id;
     @Getter
+    protected final boolean identify;
+    @Getter
     protected final long createTime;
-
+    private final int hashcode;
     protected final BoardDataManager dataMgr;
 
     public BoardInstance(BoardContext context,
                          BoardType type,
+                         boolean identify,
                          String id,
                          String name,
                          String label) {
         super(type, name, label);
+        this.identify = identify;
         this.context = context;
-        this.id = id;
+        if (identify) {
+            Assert.hasText(id, "id must not be empty");
+            this.id = id;
+        } else {
+            this.id = type.name() + ":" + name;
+        }
         this.dataMgr = new BoardDataManager(this);
         this.createTime = context.currentTime();
+        this.hashcode = StrUtil.hashcodeIgnoreCase(this.id);
     }
 
     public boolean containsData(BoardType type, String name) {
@@ -56,12 +68,21 @@ public class BoardInstance extends BoardObject {
         return dataMgr.all(type);
     }
 
-    protected void setParent(BoardInstance parent) {
+    void setParent(BoardInstance parent) {
         this.parent = parent;
     }
 
     @Override
-    public int hashCode() {//NOSONAR
-        return id.hashCode();
+    public int hashCode() {
+        return hashcode;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        return obj instanceof BoardInstance i &&
+                type == i.type && StrUtil.equalsIgnoreCase(id, i.id) && StrUtil.equalsIgnoreCase(name, i.name);
     }
 }

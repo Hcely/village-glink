@@ -1,5 +1,6 @@
 package org.village.glink.board.instance;
 
+import lombok.Getter;
 import org.village.glink.board.BoardContext;
 import org.village.glink.board.BoardType;
 
@@ -8,14 +9,13 @@ import org.village.glink.board.BoardType;
  * @date 2026/7/3
  */
 public class BoardItem extends BoardInstance {
-    protected final boolean overlay;
+    @Getter
     protected final ItemQuantity quantity;
 
     public BoardItem(BoardContext context,
                      String name,
                      String label) {
-        super(context, BoardType.ITEM, "", name, label);
-        this.overlay = true;
+        super(context, BoardType.ITEM, false, null, name, label);
         this.quantity = new ItemQuantity();
     }
 
@@ -23,8 +23,7 @@ public class BoardItem extends BoardInstance {
                      String id,
                      String name,
                      String label) {
-        super(context, BoardType.ITEM, id, name, label);
-        this.overlay = false;
+        super(context, BoardType.ITEM, true, id, name, label);
         this.quantity = null;
     }
 }

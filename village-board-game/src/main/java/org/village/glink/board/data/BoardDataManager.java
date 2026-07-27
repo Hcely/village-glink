@@ -2,7 +2,6 @@ package org.village.glink.board.data;
 
 import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
-import org.village.glink.board.util.BoardDataMap;
 import org.village.lite.common.util.CollUtil;
 
 import java.util.Collection;

@@ -1,6 +1,5 @@
-package org.village.glink.board.util;
+package org.village.glink.board.data;
 
-import org.village.glink.board.data.BoardData;
 import org.village.glink.board.instance.BoardInstance;
 import org.village.lite.common.util.CollUtil;
 import org.village.lite.common.util.StrUtil;
