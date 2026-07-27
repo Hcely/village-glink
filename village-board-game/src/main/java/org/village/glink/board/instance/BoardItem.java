@@ -24,6 +24,22 @@ public class BoardItem extends BoardInstance {
                      String name,
                      String label) {
         super(context, BoardType.ITEM, true, id, name, label);
-        this.quantity = null;
+        this.quantity = ItemQuantity.ONE;
+    }
+
+    public void addQuantity(ItemQuantity q) {
+        this.quantity.add(q);
+    }
+
+    public boolean addQuantity(long v) {
+        return quantity.add(v);
+    }
+
+    public boolean addQuantity(long v, long priority, Object flag) {
+        return quantity.add(v, priority, flag);
+    }
+
+    public boolean addQuantity(long v, long priority) {
+        return quantity.add(v, priority);
     }
 }

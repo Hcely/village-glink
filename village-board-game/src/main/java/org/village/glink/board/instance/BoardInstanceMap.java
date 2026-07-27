@@ -38,7 +38,7 @@ public class BoardInstanceMap<I extends BoardInstance> {
                 set.add(instance);
             } else if (instance instanceof BoardItem item) {
                 BoardItem i = (BoardItem) set.getFirst();
-
+                i.addQuantity(item.getQuantity());
             }
         }
     }

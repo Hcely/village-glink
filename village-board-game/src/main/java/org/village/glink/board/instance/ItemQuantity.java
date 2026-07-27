@@ -8,6 +8,8 @@ import org.village.lite.common.util.ObjUtil;
  * @date 2026/7/8
  */
 public class ItemQuantity {
+    public static final ItemQuantity ONE = new OneItemQuantity();
+
     private PriorityQuantityNode head;
     @Getter
     private long basicQuantity = 0;
@@ -18,14 +20,18 @@ public class ItemQuantity {
         return head;
     }
 
+    public boo
+
     public long getPriorityQuantity() {
         return quantity - basicQuantity;
     }
 
-    public void add(ItemQuantity quantity) {
-        add(quantity.basicQuantity);
-        for (PriorityQuantityNode node = quantity.head; node != null; node = node.next) {
-            add(node.quantity, node.priority, node.flag);
+    public void add(ItemQuantity q) {
+        if (q != null) {
+            add(q.basicQuantity);
+            for (PriorityQuantityNode node = q.head; node != null; node = node.next) {
+                add(node.quantity, node.priority, node.flag);
+            }
         }
     }
 
@@ -162,4 +168,47 @@ public class ItemQuantity {
             return 0;
         }
     }
+
+    private static class OneItemQuantity extends ItemQuantity {
+        @Override
+        public long getBasicQuantity() {
+            return 1;
+        }
+
+        @Override
+        public long getQuantity() {
+            return 1;
+        }
+
+        @Override
+        public PriorityQuantityNode priorityNode() {
+            return null;
+        }
+
+        @Override
+        public long getPriorityQuantity() {
+            return 0;
+        }
+
+        @Override
+        public void add(ItemQuantity q) {
+            //NOTHING
+        }
+
+        @Override
+        public boolean add(long v) {
+            return false;
+        }
+
+        @Override
+        public boolean add(long v, long priority) {
+            return false;
+        }
+
+        @Override
+        public boolean add(long v, long priority, Object flag) {
+            return false;
+        }
+    }
+
 }
