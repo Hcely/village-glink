@@ -76,20 +76,21 @@ public class BoardItemManager {
     }
 
     public Collection<BoardItem> removeItemByName(String name) {
-        UnLinkedHashSet<BoardItem> items = itemMapByName.remove(name);
-        if (CollUtil.isEmpty(items)) {
+        UnLinkedHashSet<BoardItem> set = itemMapByName.remove(name);
+        if (CollUtil.isEmpty(set)) {
             return Collections.emptyList();
         }
-        for (BoardItem item : items) {
+        for (BoardItem item : set) {
             item.setParent(null);
             itemMapById.remove(item.getId());
         }
-        return new ArrayList<>(items);
+        return new ArrayList<>(set);
     }
 
 
     protected UnLinkedHashSet<BoardItem> _optSet(String name) {
         UnLinkedHashSet<BoardItem> set = itemMapByName.get(name);
+        //noinspection Java8MapApi
         if (set == null) {
             set = new UnLinkedHashSet<>();
             itemMapByName.put(name, set);

@@ -30,6 +30,14 @@ public class BoardInstance extends BoardObject {
 
     public BoardInstance(BoardContext context,
                          BoardType type,
+                         String id,
+                         String name,
+                         String label) {
+        this(context, type, true, id, name, label);
+    }
+
+    public BoardInstance(BoardContext context,
+                         BoardType type,
                          boolean identify,
                          String id,
                          String name,

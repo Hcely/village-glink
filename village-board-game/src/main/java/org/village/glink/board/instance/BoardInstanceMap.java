@@ -11,44 +11,31 @@ import java.util.Map;
  * @author yepeijie
  * @date 2026/7/21
  */
-public class BoardInstanceMap<I extends BoardInstance> {
-    private final BoardInstance instance;
-    private final Map<String, UnLinkedHashSet<I>> instanceMapByName;
-    private final Map<String, I> instanceMapById;
-    private final Collection<I> coll;
+public class BoardInstanceMap {
+    private final Map<String, UnLinkedHashSet<BoardInstance>> instanceMapByName;
+    private final Map<String, BoardInstance> instanceMapById;
+    private final Collection<BoardInstance> instances;
 
-    public BoardInstanceMap(BoardInstance instance) {
-        this.instance = instance;
+    public BoardInstanceMap() {
         this.instanceMapByName = new LinkedHashMap<>();
         this.instanceMapById = new LinkedHashMap<>();
-        this.coll = CollUtil.unmodifiable(instanceMapById.values());
+        this.instances = CollUtil.unmodifiable(instanceMapById.values());
     }
 
-    public void add(I instance) {
+    public void add(BoardInstance instance) {
+        if (!instance.isIdentify()) {
+            return;
+        }
         final String name = instance.getName();
         final String id = instance.getId();
         boolean added = instanceMapById.put(id, instance) == null;
         if (added) {
-            instance.setParent(this.instance);
             _optSet(name).add(instance);
-        } else if (!instance.isIdentify()) {
-            UnLinkedHashSet<I> set = _optSet(name);
-            if (CollUtil.isEmpty(set)) {
-                instance.setParent(this.instance);
-                set.add(instance);
-            } else if (instance instanceof BoardItem item) {
-                BoardItem i = (BoardItem) set.getFirst();
-                i.addQuantity(item.getQuantity());
-            }
         }
     }
 
-    protected UnLinkedHashSet<I> _getSet(String name) {
-        return instanceMapByName.get(name);
-    }
-
-    protected UnLinkedHashSet<I> _optSet(String name) {
-        UnLinkedHashSet<I> set = instanceMapByName.get(name);
+    protected UnLinkedHashSet<BoardInstance> _optSet(String name) {
+        UnLinkedHashSet<BoardInstance> set = instanceMapByName.get(name);
         if (set == null) {
             set = new UnLinkedHashSet<>();
             instanceMapByName.put(name, set);
