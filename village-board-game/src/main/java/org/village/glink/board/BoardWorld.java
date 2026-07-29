@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * @since 2026/6/24 20:01
  */
-public class BoardContext {
+public class BoardWorld {
     @Getter
     private final long seed;
     @Getter
@@ -23,7 +23,7 @@ public class BoardContext {
     private final Map<String, BoardInstance> instanceMapById;
     private final Collection<BoardInstance> instances;
 
-    public BoardContext(long seed) {
+    public BoardWorld(long seed) {
         this.seed = seed;
         this.random = new Random(seed);
         this.instanceMapByName = new LinkedHashMap<>();

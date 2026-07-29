@@ -1,7 +1,7 @@
 package org.village.glink.board.instance;
 
 import lombok.Getter;
-import org.village.glink.board.BoardContext;
+import org.village.glink.board.BoardWorld;
 import org.village.glink.board.BoardType;
 
 /**
@@ -12,14 +12,14 @@ public class BoardItem extends BoardInstance {
     @Getter
     protected final ItemQuantity quantity;
 
-    public BoardItem(BoardContext context,
+    public BoardItem(BoardWorld context,
                      String name,
                      String label) {
         super(context, BoardType.ITEM, false, null, name, label);
         this.quantity = new ItemQuantity();
     }
 
-    public BoardItem(BoardContext context,
+    public BoardItem(BoardWorld context,
                      String id,
                      String name,
                      String label) {

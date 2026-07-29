@@ -1,6 +1,6 @@
 package org.village.glink.board.instance;
 
-import org.village.glink.board.BoardContext;
+import org.village.glink.board.BoardWorld;
 import org.village.glink.board.BoardType;
 
 /**
@@ -9,7 +9,7 @@ import org.village.glink.board.BoardType;
 public class BoardCharacter extends BoardInstance {
     protected final BoardItemManager itemManager;
 
-    public BoardCharacter(BoardContext context,
+    public BoardCharacter(BoardWorld context,
                           String id,
                           String name,
                           String label) {

@@ -1,24 +1,24 @@
 package org.village.glink.board.event;
 
-import org.village.glink.board.BoardContext;
+import org.village.glink.board.BoardWorld;
 
 /**
  * @author yepeijie
  * @date 2026/7/20
  */
 public class BoardEvent {
-    protected final BoardContext context;
+    protected final BoardWorld context;
     protected final long eventTime;
-    protected final BoardEvent parent;
+    protected final int eventIdx;
     protected final BoardEventData data;
 
-    public BoardEvent(BoardContext context,
+    public BoardEvent(BoardWorld context,
                       long eventTime,
-                      BoardEvent parent,
+                      int eventIdx,
                       BoardEventData data) {
         this.context = context;
         this.eventTime = eventTime;
-        this.parent = parent;
+        this.eventIdx = eventIdx;
         this.data = data;
     }
 }

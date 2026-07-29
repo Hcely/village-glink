@@ -2,7 +2,7 @@ package org.village.glink.board.instance;
 
 import lombok.Getter;
 import org.springframework.util.Assert;
-import org.village.glink.board.BoardContext;
+import org.village.glink.board.BoardWorld;
 import org.village.glink.board.BoardObject;
 import org.village.glink.board.BoardType;
 import org.village.glink.board.data.BoardData;
@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 public class BoardInstance extends BoardObject {
     @Getter
-    protected final BoardContext context;
+    protected final BoardWorld context;
     @Getter
     protected BoardInstance parent;
     @Getter
@@ -28,7 +28,7 @@ public class BoardInstance extends BoardObject {
     private final int hashcode;
     protected final BoardDataManager dataMgr;
 
-    public BoardInstance(BoardContext context,
+    public BoardInstance(BoardWorld context,
                          BoardType type,
                          String id,
                          String name,
@@ -36,7 +36,7 @@ public class BoardInstance extends BoardObject {
         this(context, type, true, id, name, label);
     }
 
-    public BoardInstance(BoardContext context,
+    public BoardInstance(BoardWorld context,
                          BoardType type,
                          boolean identify,
                          String id,
