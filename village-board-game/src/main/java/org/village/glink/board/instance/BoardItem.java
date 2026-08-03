@@ -12,18 +12,18 @@ public class BoardItem extends BoardInstance {
     @Getter
     protected final ItemQuantity quantity;
 
-    public BoardItem(BoardWorld context,
+    public BoardItem(BoardWorld world,
                      String name,
                      String label) {
-        super(context, BoardType.ITEM, false, null, name, label);
+        super(world, BoardType.ITEM, false, null, name, label);
         this.quantity = new ItemQuantity();
     }
 
-    public BoardItem(BoardWorld context,
+    public BoardItem(BoardWorld world,
                      String id,
                      String name,
                      String label) {
-        super(context, BoardType.ITEM, true, id, name, label);
+        super(world, BoardType.ITEM, true, id, name, label);
         this.quantity = ItemQuantity.ONE;
     }
 

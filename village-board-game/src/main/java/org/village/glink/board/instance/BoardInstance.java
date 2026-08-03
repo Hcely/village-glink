@@ -16,7 +16,7 @@ import java.util.Collection;
  */
 public class BoardInstance extends BoardObject {
     @Getter
-    protected final BoardWorld context;
+    protected final BoardWorld world;
     @Getter
     protected BoardInstance parent;
     @Getter
@@ -28,15 +28,15 @@ public class BoardInstance extends BoardObject {
     private final int hashcode;
     protected final BoardDataManager dataMgr;
 
-    public BoardInstance(BoardWorld context,
+    public BoardInstance(BoardWorld world,
                          BoardType type,
                          String id,
                          String name,
                          String label) {
-        this(context, type, true, id, name, label);
+        this(world, type, true, id, name, label);
     }
 
-    public BoardInstance(BoardWorld context,
+    public BoardInstance(BoardWorld world,
                          BoardType type,
                          boolean identify,
                          String id,
@@ -44,7 +44,7 @@ public class BoardInstance extends BoardObject {
                          String label) {
         super(type, name, label);
         this.identify = identify;
-        this.context = context;
+        this.world = world;
         if (identify) {
             Assert.hasText(id, "id must not be empty");
             this.id = id;
@@ -52,7 +52,7 @@ public class BoardInstance extends BoardObject {
             this.id = type.name() + ":" + name;
         }
         this.dataMgr = new BoardDataManager(this);
-        this.createTime = context.currentTime();
+        this.createTime = world.currentTime();
         this.hashcode = StrUtil.hashcodeIgnoreCase(this.id);
     }
 

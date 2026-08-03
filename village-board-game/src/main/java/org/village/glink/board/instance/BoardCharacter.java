@@ -9,11 +9,11 @@ import org.village.glink.board.BoardType;
 public class BoardCharacter extends BoardInstance {
     protected final BoardItemManager itemManager;
 
-    public BoardCharacter(BoardWorld context,
+    public BoardCharacter(BoardWorld world,
                           String id,
                           String name,
                           String label) {
-        super(context, BoardType.CHARACTER, id, name, label);
+        super(world, BoardType.CHARACTER, id, name, label);
         this.itemManager = new BoardItemManager(this);
     }
 }

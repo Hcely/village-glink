@@ -15,5 +15,17 @@ public class BoardEventStack {
         this.world = world;
         this.eventStack = new StackArray<>(10, 5);
     }
+
+    public BoardEvent add(BoardEventData data) {
+        final int eventIdx = eventStack.size();
+        final long eventTime = world.currentTime();
+        BoardEvent event = new BoardEvent(world, eventTime, eventIdx, data);
+        eventStack.add(event);
+        return event;
+    }
+
+    public int eventSize() {
+        return eventStack.size();
+    }
 }
 
