@@ -18,12 +18,13 @@ public class BoardEventStack {
     }
 
     public BoardEvent add(BoardEventData data) {
-        final int eventIdx = events.size();
-        if (eventIdx >= MAX_SIZE) {
+        final int eventSize = events.size();
+        if (eventSize >= MAX_SIZE) {
             throw new StackOverflowError();
         }
         final long eventTime = world.currentTime();
-        BoardEvent event = new BoardEvent(world, eventTime, eventIdx, data);
+        final BoardEvent parent = events.last();
+        BoardEvent event = new BoardEvent(world, eventTime, parent, data);
         events.add(event);
         return event;
     }
