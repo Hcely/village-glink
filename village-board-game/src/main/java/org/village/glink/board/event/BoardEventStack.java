@@ -24,7 +24,7 @@ public class BoardEventStack {
         }
         final long eventTime = world.currentTime();
         final BoardEvent parent = events.last();
-        BoardEvent event = new BoardEvent(world, eventTime, parent, data);
+        final BoardEvent event = new BoardEvent(world, eventTime, parent, data);
         events.add(event);
         return event;
     }
@@ -38,11 +38,20 @@ public class BoardEventStack {
     }
 
     public BoardEvent poll() {
-        return events.poll();
+        BoardEvent e = events.poll();
+        if (e != null) {
+            e.remove();
+        }
+        return e;
     }
 
-    public BoardEvent get(int index) {
-        return events.get(index);
+    public BoardEvent poll(BoardEvent expect) {
+        BoardEvent e = events.last();
+        if (e != null && (expect == null || e == expect)) {
+            events.poll();
+            e.remove();
+        }
+        return e;
     }
 }
 

@@ -12,6 +12,7 @@ public class BoardEvent {
     protected final BoardWorld world;
     protected final long eventTime;
     protected final BoardEvent parent;
+    protected boolean removed;
     protected final BoardEventData data;
 
     public BoardEvent(BoardWorld world,
@@ -21,6 +22,11 @@ public class BoardEvent {
         this.world = world;
         this.eventTime = eventTime;
         this.parent = parent;
+        this.removed = false;
         this.data = data;
+    }
+
+    final void remove() {
+        this.removed = true;
     }
 }
