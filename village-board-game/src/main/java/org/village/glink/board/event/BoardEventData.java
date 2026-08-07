@@ -2,7 +2,9 @@ package org.village.glink.board.event;
 
 import org.village.glink.board.instance.BoardInstance;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,17 +14,18 @@ import java.util.Set;
 public class BoardEventData {
     protected final String name;
     protected final BoardInstance srcInstance;
-    protected final BoardInstance dstInstance;
+    protected final Map<String, BoardInstance> subSrcInstances;
+    protected final Map<String, BoardInstance> dstInstances;
     protected final BoardEventAction action;
     protected final Set<String> flags;
 
     public BoardEventData(String name,
                           BoardInstance srcInstance,
-                          BoardInstance dstInstance,
                           BoardEventAction action) {
         this.name = name;
         this.srcInstance = srcInstance;
-        this.dstInstance = dstInstance;
+        this.subSrcInstances = new LinkedHashMap<>();
+        this.dstInstances = new LinkedHashMap<>();
         this.action = action;
         this.flags = new LinkedHashSet<>();
     }

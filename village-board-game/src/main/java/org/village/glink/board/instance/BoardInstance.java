@@ -28,6 +28,7 @@ public class BoardInstance extends BoardObject {
     private final int hashcode;
     protected final BoardDataManager dataMgr;
 
+
     public BoardInstance(BoardWorld world,
                          BoardType type,
                          String id,

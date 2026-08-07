@@ -1,4 +1,4 @@
-package org.village.glink.board.data;
+package org.village.glink.board.data.skill;
 
 import org.village.glink.board.BoardType;
 import org.village.glink.board.instance.BoardInstance;
@@ -7,7 +7,7 @@ import org.village.glink.board.instance.BoardInstance;
  * @author yepeijie
  * @date 2026/7/3
  */
-public class BoardState extends BoardData {
+public class BoardState extends BoardActiveData {
     protected final BoardInstance provider;
     protected final Object identifyFlag;
 

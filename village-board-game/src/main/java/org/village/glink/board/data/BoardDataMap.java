@@ -38,7 +38,6 @@ public class BoardDataMap<D extends BoardData> {
             return false;
         } else {
             D e = (D) data.copy();
-            e.setInstance(instance);
             map.put(name, e);
             return true;
         }

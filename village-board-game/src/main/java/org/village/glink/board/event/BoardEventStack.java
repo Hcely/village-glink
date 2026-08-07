@@ -37,6 +37,10 @@ public class BoardEventStack {
         return events.last();
     }
 
+    public BoardEvent get(int index) {
+        return events.get(index);
+    }
+
     public BoardEvent poll() {
         BoardEvent e = events.poll();
         if (e != null) {
