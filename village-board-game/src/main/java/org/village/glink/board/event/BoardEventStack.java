@@ -46,9 +46,8 @@ public class BoardEventStack {
     }
 
     public BoardEvent poll(BoardEvent expect) {
-        BoardEvent e = events.last();
-        if (e != null && (expect == null || e == expect)) {
-            events.poll();
+        BoardEvent e = events.poll(expect);
+        if (e != null) {
             e.remove();
         }
         return e;
